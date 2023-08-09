@@ -17,7 +17,6 @@ class CourseController extends Controller
         $courses = Course::all();
 
         return view('pages.courses.index', compact('courses'));
-        
     }
 
     /**
@@ -28,7 +27,6 @@ class CourseController extends Controller
         $flag_form = 0;
 
         return view('pages.courses.add', compact('flag_form'));
-        
     }
 
     /**
@@ -104,6 +102,8 @@ class CourseController extends Controller
     {
         Excel::import(new CoursesImport, $request->file('file')->store('files'));
 
-        return redirect('/courses/add')->with('success', 'All good!');
+        notify()->success(__('Los datos se importaron correctamente.'));
+
+        return redirect()->route('courses.index');
     }
 }
