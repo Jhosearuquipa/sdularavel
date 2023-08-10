@@ -16,22 +16,37 @@ class EnrollmentsImport implements ToModel, WithHeadingRow
      * @return \Illuminate\Database\Eloquent\Model|null
      */
 
-    private $students, $grades;
+    private $students,
+        $grades,
+        $course_id;
 
-    public function __construct()
+    private $duplicates = [];
+
+    public function __construct($course_id)
     {
         $this->students = Student::pluck('id', 'cuil');
         $this->grades = Grade::pluck('id', 'remark');
+        $this->course_id = $course_id;
     }
 
     public function model(array $row)
     {
+        // Validar si ya existe una inscripción con el mismo student_id
+
+        $existingEnrollment = Enrollment::where('student_id', $this->students[$row['cuil']])
+            ->where('course_id', $this->course_id)
+            ->first();
+
+        if ($existingEnrollment) {
+            return null;
+        }
+
         return new Enrollment([
-            'active'        => 'Y',
-            'course_id'     => $row['curso'],
+            'active'        => '1',
+            'course_id'     => $this->course_id,
             'student_id'    => $this->students[$row['cuil']],
-            'attendance'    => $this->grades[$row['asistencia']],
-            'marks'         => $this->grades[$row['acta']],
+            //'attendance'    => $this->grades[$row['asistencia']],
+            // 'marks'         => $this->grades[$row['acta']],
         ]);
     }
 }

@@ -16,13 +16,23 @@
                             <div class="col-auto">
                                 <input class="form-control" type="file" id="formFile" name="file">
                             </div>
-
+                            <input type="hidden" name="course_id" value="{{ $id }}">
                             <div class="col-auto">
                                 <button type="submit" class="btn btn-primary mb-3">Cargar archivo</button>
                             </div>
                         </form>
                     </div>
                 </div>
+
+                @if ($errors->any())
+                    <div class="alert alert-danger mt-5">
+                        <ul>
+                            @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                @endif
 
                 <div class="card mt-5">
                     <div class="card-header">

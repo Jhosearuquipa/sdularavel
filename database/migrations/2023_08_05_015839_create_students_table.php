@@ -13,12 +13,25 @@
         {
             Schema::create('students', function (Blueprint $table) {
                 $table->id();
-                $table->string('active');
+                $table->string('method');
                 $table->string('user_type');
                 $table->string('cuil')->unique();
                 $table->string('firstname');
                 $table->string('lastname');
+                $table->string('work_email', 100)->unique();
+                $table->string('ministerio');
+                $table->string('reparticion');
+                $table->string('contract_type')->nullable();
+                $table->string('area')->nullable();
+                $table->string('manager')->nullable();
                 $table->string('email', 100)->unique()->nullable();
+                $table->string('phone')->nullable();
+                $table->string('mobile')->nullable();
+                $table->string('regimen')->nullable();
+                $table->string('provincia')->nullable();
+                $table->string('active');
+                $table->string('leave_date')->nullable();
+
                 $table->timestamps();
             });
         }

@@ -52,13 +52,13 @@
                         <form action="{{ route('students.store') }}" method="post">
 
                             @csrf
-                            
+
                             @include('pages.students.form')
                             <div class="mb-3 text-center">
                                 <a href="{{ route('students.index') }}" class="btn btn-secondary">Cancelar</a>
                                 <button type="submit" class="btn btn-primary">Guardar</button>
                             </div>
-                            
+
                         </form>
                     </div>
                 </div>

@@ -9,5 +9,24 @@ class Student extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['active', 'user_type', 'cuil', 'firstname', 'lastname', 'email'];
+    protected $fillable = [
+        'method',
+        'user_type',
+        'cuil',
+        'firstname',
+        'lastname',
+        'work_email',
+        'ministerio',
+        'reparticion',
+        'contract_type',
+        'area',
+        'manager',
+        'email',
+        'phone',
+        'mobile',
+        'regimen',
+        'provincia',
+        'active',
+        'leave_date',
+    ];
 }

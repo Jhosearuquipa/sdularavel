@@ -20,9 +20,9 @@ class EnrollmentController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create(int $id)
     {
-        return view('pages.enrollments.add');
+        return view('pages.enrollments.add', compact('id'));
     }
 
     /**
@@ -67,10 +67,17 @@ class EnrollmentController extends Controller
 
     public function importFile(Request $request)
     {
-        Excel::import(new EnrollmentsImport, $request->file('file')->store('files'));
+        $import = new EnrollmentsImport($request->course_id);
+
+        $file = $request->file('file')->store('files');
+
+        Excel::import($import, $file);
 
         notify()->success('Usuarios importados correctamente');
 
-        return redirect('courses/3/enrollments');
+        // return redirect('courses/' . $request->course_id . '/enrollments', compact('duplicates'));
+        //return  $duplicates;
+
+        return redirect()->route('enrollments.add', $request->course_id);
     }
 }
