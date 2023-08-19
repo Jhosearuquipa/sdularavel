@@ -5,11 +5,10 @@
         <div class="row justify-content-center">
             <div class="col">
 
+                <h4 class="mb-3">{{ $course->id . ' - ' . $course->name }}</h4>
 
                 <div class="card mt-5">
                     <div class="card-header">
-
-                        {{ $course->id . ' - ' . $course->name }}
 
                         <a href="#" class="btn btn-primary">Agregar</a>
                     </div>

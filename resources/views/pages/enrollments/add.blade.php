@@ -4,6 +4,15 @@
     <div class="container">
         <div class="row justify-content-center">
             <div class="col">
+
+                <h4 class="mb-3">{{ $course->id . ' - ' . $course->name }}</h4>
+
+                @if (session('status'))
+                    <div class="alert alert-success" role="alert">
+                        {{ session('status') }}
+                    </div>
+                @endif
+
                 <div class="card">
                     <div class="card-header">
                         Importar Usuarios
@@ -35,46 +44,35 @@
                 @endif
 
                 <div class="card mt-5">
-                    <div class="card-header">
-
-                        {{ $course->id . ' - ' . $course->name }}
-
+                    {{-- <div class="card-header text-end">
                         <a href="#" class="btn btn-primary">Agregar</a>
-                    </div>
+                    </div> --}}
 
-                    <div class="card-body">
-                        @if (session('status'))
-                            <div class="alert alert-success" role="alert">
-                                {{ session('status') }}
-                            </div>
-                        @endif
-                        <table class="table table-striped">
-                            <thead>
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">Cuil</th>
+                                <th scope="col">Apellido</th>
+                                <th scope="col">Nombre</th>
+                                <th scope="col">Email</th>
+                                <th scope="col">Calificación</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach ($students as $key => $students)
                                 <tr>
-                                    <th scope="col">#</th>
-                                    <th scope="col">Cuil</th>
-                                    <th scope="col">Apellido</th>
-                                    <th scope="col">Nombre</th>
-                                    <th scope="col">Email</th>
-                                    <th scope="col">Calificación</th>
+                                    <td>{{ $key }}</td>
+                                    <td>{{ $students->cuil }}</td>
+                                    <td>{{ $students->lastname }}</td>
+                                    <td>{{ $students->firstname }}</td>
+                                    <td>{{ $students->work_email }}</td>
+                                    <td>{{ $students->remark }}</td>
+
                                 </tr>
-                            </thead>
-                            <tbody>
-                                @foreach ($students as $key => $students)
-                                    <tr>
-                                        <td>{{ $key }}</td>
-                                        <td>{{ $students->cuil }}</td>
-                                        <td>{{ $students->lastname }}</td>
-                                        <td>{{ $students->firstname }}</td>
-                                        <td>{{ $students->work_email }}</td>
-                                        <td>{{ $students->remark }}</td>
-
-                                    </tr>
-                                @endforeach
-                            </tbody>
-                        </table>
-
-                    </div>
+                            @endforeach
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>
