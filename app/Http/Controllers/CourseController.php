@@ -14,7 +14,7 @@ class CourseController extends Controller
      */
     public function index()
     {
-        $courses = Course::all();
+        $courses = Course::whereBetween('fh_course_start', ['2022-05-01 00:00:00', '2022-12-31 23:59:00'])->orderBy('fh_course_start', 'asc')->get();
 
         return view('pages.courses.index', compact('courses'));
     }

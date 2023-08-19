@@ -7,6 +7,7 @@ use App\Models\Convocatoria;
 use App\Models\Course;
 use App\Models\CourseType;
 use App\Models\Modality;
+use App\Models\Modules;
 use App\Models\Project;
 use App\Models\System;
 use App\Models\User;
@@ -24,6 +25,7 @@ class CoursesImport implements ToModel, WithHeadingRow
 
     private $modality,
         $system,
+        $module,
         $usertype,
         $convocatoria,
         $project,
@@ -35,6 +37,7 @@ class CoursesImport implements ToModel, WithHeadingRow
     {
         $this->modality = Modality::pluck('id', 'name');
         $this->system = System::pluck('id', 'name');
+        $this->module = Modules::pluck('id', 'module');
         $this->usertype = UserType::pluck('id', 'user_type');
         $this->convocatoria = Convocatoria::pluck('id', 'type');
         $this->project = Project::pluck('id', 'name');
@@ -56,7 +59,7 @@ class CoursesImport implements ToModel, WithHeadingRow
             'cant_hour'           => $row['cantidad_de_horas'],
             'modality_id'         => $this->modality[$row['modalidad']],
             'system_id'           => $this->system[$row['sistema']],
-            'module_id'           => $row['modulo'],
+            'module_id'           => $this->module[$row['modulo']],
             'user_type_id'        => $this->usertype[$row['tipo_de_usuario']],
             'convocatoria_id'     => $this->convocatoria[$row['tipo_de_convocatoria']],
             'certificate_id'      => ($row['certificado'] == 'Si') ? 1 : 0,
@@ -70,7 +73,7 @@ class CoursesImport implements ToModel, WithHeadingRow
             'platform'            => $row['plataforma'],
             'meet_date'           => \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row['encuentro_en_vivo']),
             'comments'            => $row['comentarios'],
-            'active'              => 'Y',
+            'active'              => '0',
             'created_by'          => auth()->user()->name,
             'updated_by'          => auth()->user()->name,
         ]);

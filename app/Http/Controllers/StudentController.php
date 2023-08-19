@@ -16,7 +16,7 @@ class StudentController extends Controller
     */
    public function index()
    {
-      $students = Student::all();
+      $students = Student::limit(10)->get();
 
       return view('pages.students.index', compact('students'));
    }
@@ -124,7 +124,7 @@ class StudentController extends Controller
       $request->validate([
          'file' => 'required',
       ]);
-      
+
       Excel::import(new StudentsImport, $request->file('file')->store('files'));
 
       notify()->success(__('Usuaarios agregdos correctamente.'));

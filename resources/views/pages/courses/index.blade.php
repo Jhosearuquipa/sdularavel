@@ -22,19 +22,24 @@
                         <table class="table table-striped">
                             <thead>
                                 <tr>
+                                    <th scope="col">ID SDU</th>
                                     <th scope="col">Nombre</th>
                                     <th scope="col">Fecha de inicio</th>
                                     <th scope="col">Fecha de fin</th>
+                                    <th scope="col">Comentario</th>
                                     <th scope="col"></th>
                                 </tr>
                             </thead>
                             <tbody>
                                 @foreach ($courses as $course)
                                     <tr>
-                                        <td><a href="{{ route('enrollments.add', $course->id) }}"> {{ $course->name }}</a></td>
+                                        <td>{{ $course->id }}</td>
+                                        <td><a href="{{ route('enrollments.add', $course->id) }}"> {{ $course->name }}</a>
+                                        </td>
                                         <td>{{ $course->fh_course_start }}</td>
                                         <td>{{ $course->fh_course_end }}</td>
-										<td>
+                                        <td>{{ $course->comments }}</td>
+                                        <td>
                                             <div class="dropdown">
                                                 <a class="btn btn-secondary dropdown-toggle" href="#" role="button"
                                                     id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">

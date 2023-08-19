@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Imports\EnrollmentsImport;
+use App\Models\Course;
 use App\Models\Enrollment;
+use App\Models\Student;
 use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
 
@@ -22,7 +24,17 @@ class EnrollmentController extends Controller
      */
     public function create(int $id)
     {
-        return view('pages.enrollments.add', compact('id'));
+        $course = Course::find($id);
+
+        $students = Student::join('enrollments', 'students.id', '=', 'enrollments.student_id')
+            ->join('courses', 'enrollments.course_id', '=', 'courses.id')
+            ->join('grades', 'enrollments.marks_id', '=', 'grades.id')
+            ->select('students.cuil', 'students.firstname', 'students.lastname', 'students.work_email', 'grades.remark')
+            ->where('courses.id', $id)
+            ->orderBy('students.lastname', 'asc')
+            ->get();
+
+        return view('pages.enrollments.add', compact('course', 'students'));
     }
 
     /**

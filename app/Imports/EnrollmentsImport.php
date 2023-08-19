@@ -26,27 +26,34 @@ class EnrollmentsImport implements ToModel, WithHeadingRow
     {
         $this->students = Student::pluck('id', 'cuil');
         $this->grades = Grade::pluck('id', 'remark');
-        $this->course_id = $course_id;
+        //$this->course_id = $course_id;
     }
 
     public function model(array $row)
     {
-        // Validar si ya existe una inscripción con el mismo student_id
 
-        $existingEnrollment = Enrollment::where('student_id', $this->students[$row['cuil']])
-            ->where('course_id', $this->course_id)
-            ->first();
+        if (isset($row['id_curso'])) {
+            $existingEnrollment = Enrollment::where('student_id', $this->students[$row['cuil']])
+                ->where('course_id', $row['id_curso'])
+                ->first();
 
-        if ($existingEnrollment) {
+            if ($existingEnrollment) {
+                // Ya existe una inscripción con el mismo student_id para el mismo curso
+                // Puedes realizar aquí las acciones necesarias en caso de duplicado
+                return null;
+            } else {
+                return new Enrollment([
+                    'active'        => '1',
+                    'course_id'     => $row['id_curso'],
+                    'student_id'    => $this->students[$row['cuil']],
+                    //'attendance'    => $this->grades[$row['asistencia']],
+                    'marks_id'      => $this->grades[$row['acta']],
+                    'created_by'    => auth()->user()->name,
+                    'updated_by'    => auth()->user()->name,
+                ]);
+            }
+        } else {
             return null;
         }
-
-        return new Enrollment([
-            'active'        => '1',
-            'course_id'     => $this->course_id,
-            'student_id'    => $this->students[$row['cuil']],
-            //'attendance'    => $this->grades[$row['asistencia']],
-            // 'marks'         => $this->grades[$row['acta']],
-        ]);
     }
 }
