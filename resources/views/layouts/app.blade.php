@@ -93,6 +93,8 @@
     <!-- Laravel Notify -->
     @include('notify::components.notify')
     @notifyJs
+
+    @stack('scripts')
 </body>
 
 </html>

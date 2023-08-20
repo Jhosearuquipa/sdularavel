@@ -6,6 +6,7 @@
             <div class="col">
 
                 <h4 class="mb-3">{{ $course->id . ' - ' . $course->name }}</h4>
+                <p class="mb-3">{{ $course->comments }}</p>
 
                 @if (session('status'))
                     <div class="alert alert-success" role="alert">
@@ -60,9 +61,9 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($students as $key => $students)
+                            @foreach ($students as $students)
                                 <tr>
-                                    <td>{{ $key }}</td>
+                                    <td>{{ $loop->iteration }}</td>
                                     <td>{{ $students->cuil }}</td>
                                     <td>{{ $students->lastname }}</td>
                                     <td>{{ $students->firstname }}</td>

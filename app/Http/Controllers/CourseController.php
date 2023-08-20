@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\DataTables\CoursesDataTable;
 use App\Imports\CoursesImport;
 use App\Models\Course;
 use Illuminate\Http\Request;
@@ -12,11 +13,9 @@ class CourseController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(CoursesDataTable $datatables)
     {
-        $courses = Course::whereBetween('fh_course_start', ['2022-05-01 00:00:00', '2022-12-31 23:59:00'])->orderBy('fh_course_start', 'asc')->get();
-
-        return view('pages.courses.index', compact('courses'));
+        return $datatables->render('pages.courses.index');
     }
 
     /**

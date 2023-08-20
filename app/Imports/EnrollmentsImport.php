@@ -47,7 +47,7 @@ class EnrollmentsImport implements ToModel, WithHeadingRow
                     'course_id'     => $row['id_curso'],
                     'student_id'    => $this->students[$row['cuil']],
                     //'attendance'    => $this->grades[$row['asistencia']],
-                    'marks_id'      => $this->grades[$row['acta']],
+                    'marks_id'      => $this->grades[trim(strtoupper($row['acta']))],
                     'created_by'    => auth()->user()->name,
                     'updated_by'    => auth()->user()->name,
                 ]);

@@ -28,7 +28,7 @@ class EnrollmentController extends Controller
 
         $students = Student::join('enrollments', 'students.id', '=', 'enrollments.student_id')
             ->join('courses', 'enrollments.course_id', '=', 'courses.id')
-            ->join('grades', 'enrollments.marks_id', '=', 'grades.id')
+            ->leftJoin('grades', 'enrollments.marks_id', '=', 'grades.id')
             ->select('students.cuil', 'students.firstname', 'students.lastname', 'students.work_email', 'grades.remark')
             ->where('courses.id', $id)
             ->orderBy('students.lastname', 'asc')
